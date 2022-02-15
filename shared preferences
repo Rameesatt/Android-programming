@@ -1,0 +1,130 @@
+main xml
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/e1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/e2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Address" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Data" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Retrieve Data" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+java-main
+
+
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+  EditText name,address;
+  Button savedata,retrievedata;
+  TextView textView;
+  SharedPreferences sharedPreferences;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        name = (EditText) findViewById(R.id.e1);
+        address = (EditText) findViewById(R.id.e2);
+        savedata = findViewById(R.id.button);
+        retrievedata = findViewById(R.id.button2);
+        textView = findViewById(R.id.textView);
+        sharedPreferences = getSharedPreferences("Name", MODE_PRIVATE);
+
+
+        savedata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String n = name.getText().toString();
+                String a = address.getText().toString();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Name", n);
+                editor.putString("Address", a);
+                editor.apply();
+            }
+        });
+        retrievedata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String n = sharedPreferences.getString("Name", "");
+                String a = sharedPreferences.getString("Address", "");
+                textView.setText("Name: "+n+"\nAddress:" +a);
+                textView.setTextSize(30);
+            }
+        });
+
+    }}
